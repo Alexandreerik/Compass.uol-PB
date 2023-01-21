@@ -13,4 +13,4 @@ MAILTO=root
 # |  |  |  |  |
 # *  *  *  *  * user-name  command to be executed
 
- */5 * * * * root /scripts/./verifica-status.sh
+ */5 * * * * root /Compass.uol-PB-Atv2/scripts/./verifica-status.sh

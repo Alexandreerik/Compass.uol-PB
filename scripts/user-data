@@ -1,4 +1,10 @@
 #!/bin/sh
 yum update -y
-yum install -y git httpd
+timedatectl set-timezone America/Sao_Paulo
+yum install -y httpd
+yum install -y git
 systemctl enable --now httpd
+cd /
+git clone https://github.com/Alexandreerik/Compass.uol-PB-Atv2.git
+cp Compass.uol-PB-Atv2/etc/crontab /etc/crontab
+
