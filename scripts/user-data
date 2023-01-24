@@ -8,5 +8,5 @@ cd /
 mkdir /mnt/nfs
 git clone https://github.com/Alexandreerik/Compass.uol-PB-Atv2.git
 cp Compass.uol-PB-Atv2/etc/crontab /etc/crontab
-cp Compass.uol-PB-Atv2/etc/fstab /etc/fstab
+cat Compass.uol-PB-Atv2/etc/fstab >> /etc/fstab
 mount -a
