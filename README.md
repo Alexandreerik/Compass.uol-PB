@@ -1,5 +1,6 @@
 
 # Atividade sobre AWS e Linux.
+Erik Alexandre Bezerra
 # Requisitos : AWS
 - Gerar uma chave pública para acesso ao ambiente;
 - Criar 1 instância EC2 com o sistema operacional Amazon Linux 2 (Família t3.small, 16 GB SSD);
@@ -19,174 +20,23 @@
 
 # Documentação do processo de instalação do Linux na AWS.
 
-# Sumario
+# sumário
 
-1. [Criação de uma VPC](#criação-de-uma-vpc)
-2. [Criação de um grupo de segurança](#criação-de-um-grupo-de-segurança)
-3. [Criar par de chaves](#criar-par-de-chaves)
-4. [Criação da instância Linux](#criação-da-instância-linux)
-5. [Atribuindo um endereço IP elástico](#atribuindo-um-endereço-ip-elástico)
+1. [Criar par de chaves](#criar-par-de-chaves)
+2. [Criação da instância Linux](#criação-da-instância-linux)
+3. [Atribuindo um endereço IP elástico](#atribuindo-um-endereço-ip-elástico)
+4. [Configuração de um grupo de segurança](#configuração-do-grupo-de-segurança)
 
-
-## Criação de uma **[*VPC*](https://aws.amazon.com/pt/vpc/)**
-
-Uma nuvem privada virtual (VPC) é uma rede virtual dedicada à sua conta da AWS. Ela é isolada de maneira lógica de outras redes virtuais na Nuvem da AWS.
-
-Para realizar a criação de sua VPC siga os seguintes passos:
-
-1. Acesse o serviço VPC pelo console da AWS. (https://console.aws.amazon.com/vpc/)
-2. Clique em suas VPCs. 
-3. Clique em criar VPC.
-4. Preencha os campos da seguinte forma:
-Nome
-```
-Erik
-```
-CIDR IPv4
-```
-10.0.0.0/24
-```
-TAGS
-| Chave | Valor  |
-| ---     | ---   |
-|Project|PB|
-|CostCenter|PBCompass|
-
-
-6. Clique em criar VPC.
-
-### **[*Sub-redes*](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/configure-subnets.html)**
-
-Uma sub-rede é uma gama de endereços IP na VPC. Você pode iniciar recursos da AWS em uma sub-rede especificada.
-
-Para realizar a criação de sua sub-rede siga os seguintes passos:
-
-1. Clique em sub-redes.
-2. Clique em criar sub-rede.
-3. Em ID da VPC selecione sua VPC criada anteriormente.
-4. Após a seleção da VPC ira aparecer uma area de configuração para sua sub-rede.
-5. Preencha da seguinte forma:
-
-Nome
-```
-Erik
-```
-Zona de disponibilidade
-
-```
-us-east-1a
-```
-CIDR IPv4
-```
-10.0.0.0/24
-```
-TAGS
-| Chave | Valor  |
-| ---     | ---   |
-|Project|PB|
-|CostCenter|PBCompass|
-
-6. Clique em criar sub-rede.
-
-### **[*Gateways da internet*](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Internet_Gateway.html)**
-Um gateway da Internet é um roteador virtual que conecta uma VPC à Internet.
-
-Para realizar a criação de seu Gateway da internet siga os seguintes passos:
-1. Clique em Gateways da internet.
-2. Clique em criar Gateways da internet.
-3. Preencha os campos da seguite forma.
-
-Nome
-```
-ErikGateway
-```
-TAGS
-| Chave | Valor  |
-| ---     | ---   |
-|Project|PB|
-|CostCenter|PBCompass|
-
-4. Clique em criar Gateway de internet.
-
-### **[*Tabelas de rotas*](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Route_Tables.html)**
-
-Uma tabela de rotas contém um conjunto de regras, chamado rotas, usadas para determinar para onde o tráfego de rede de sua sub-rede ou gateway é direcionado.
-
-Para realizar a criação de sua tabela de rotas.
-
-1. Clique em tabelas de rotas.
-2. Clique em criar tabela de rotas.
-3. De um nome `Erik` para sua tabela de rotas.
-4. No campo `VPC` selecione sua VPC criada anteriormente.
-5. Clique em criar tabela de rotas.
-
-Após realizar esses passos utilizaremos a tabela de rotas para conectar o Gateway da internet e sua Sub-rede.
-
-Selecione a tabela de rotas com o nome `Erik`. Após selecionar ela, estará visível no canto inferior às configurações referente a essa tabela.
-1. Clique em rotas;
-2. Clique em editar rotas;
-3. Na página de edição clique em adicionar rota;
-4. Preencha os campos da seguinte forma:
-
-| Destino | Alvo  |
-| ---     | ---   |
-|0.0.0.0/0|Seu gateways da internet|
-
-5. Clique em salvar alterações
-
-Retornando ao setor de configurações da tabela de rotas realize os seguintes passos:
-
-1. Clique em Associações de sub-rede;
-2. siga até Sub-redes sem associações explícitas;
-3. Caso sua sub-rede já esteja amostra, a configuração acabou;
-4. Caso contrário, vá em associações explícitas de sub-rede e adicione a sub-rede que falta. 
-
-Após a realização desses passos, nossa sub-rede criada terá acesso à internet. Agora podemos dar início a construção de nossa instância linux.
-
-## Criação de um **[*grupo de segurança*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/ec2-security-groups.html)**
-
-Um grupo de segurança atua como um firewall virtual que controla o tráfego de uma ou mais instâncias.
-
-Para a criação do grupo de segurança siga os seguintes passos:
-
-1. Acesse o serviço Ec2 pelo console da AWS; https://us-east-1.console.aws.amazon.com/ec2
-2. Clique em Grupos de segurança;
-3. Clique em criar grupo de segurança;
-4. Preencha os campos da seguinte forma:
-
-Nome
-```
-ErikSeguranca
-```
-VPC
-
-```
-Sua VPC criada anteriomente
-```
-
-Regras de entrada
-
-![segurança](segurança.png)
-
-Na porta SSH foi utilizado meu IP. Você pode obter seu IP pelo site https://meuip.com.br.
-
-TAGS
-| Chave | Valor  |
-| ---     | ---   |
-|Project|PB|
-|CostCenter|PBCompass|
-
-5. Clique em criar grupo de segurança.
-
-## Criar **[*par de chaves*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/ec2-key-pairs.html)**
+# Criar **[*par de chaves*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/ec2-key-pairs.html)**
 
 Um par de chaves, que consiste em uma chave privada e uma chave pública, é um conjunto de credenciais de segurança que você usa para provar sua identidade ao se conectar a uma instância.
 
 Para criar o par de chaves siga os seguintes passas:
 
-1. No tópico rede e segurança clique em pares de chaves;
-2. Clique em criar par de chaves;
-3. Preencha os campos da seguinte forma:
+1. Entre no console do serviço ec2; 
+2. No tópico rede e segurança clique em `pares de chaves`;
+3. Clique em `criar par de chaves`;
+4. Preencha os campos da seguinte forma:
 
 Nome
 ```
@@ -198,7 +48,7 @@ RSA
 ```
 Formato de arquivo de chave privada
 ```
-.ppk
+.pem
 ```
 OBS. O formato da chave é específico para como você irá acessar a instância, no meu caso será pelo putty no sistema operacional windows.
 
@@ -208,18 +58,17 @@ TAGS
 |Project|PB|
 |CostCenter|PBCompass|
 
-4. Clique em criar par de chaves.
+5. Clique em `criar par de chaves`.
 
+# Criação da **[*instância*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/EC2_GetStarted.html)** Linux
+É possível executar uma instância do Linux utilizando o AWS Management Console como descrito no procedimento a seguir.
 
-## Criação da **[*instância*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/EC2_GetStarted.html)** Linux
+1. Acesse o console de serviços ec2;
+2. Clique em `instâcias`;
+3. Clique em `executar instâncias`;
+4. Agora preencha os campos da seguinte forma:
 
-Agora que já possuímos as configurações necessárias para criar nossa instância.
-Siga os seguintes passos:
-
-1. clique em instâcias no console de serviços ec2;
-2. Clique em executar instâncias;
-3. Agora preencha os campos da seguinte forma:
-
+TAGS
 | Chave | Valor  |
 | ---     | ---   |
 |Name|Erik|
@@ -241,38 +90,34 @@ Nome do par de chaves
 ```
 ChaveErik
 ```
-Nome do par de chaves
 
-Configurações de rede
 
-Clique em editar 
-1. Selecione sua VPC;
-2. Selecione sua sub-rede;
-3. Habilite o IP público;
-4. Em Firewall (grupos de segurança) selecione grupo de segurança existente.
+### Configurações de rede
+ 
+Em Firewall (grupos de segurança) selecione grupo de segurança existente.
 
 Grupos de segurança
 ```
-ErikSeguranca
+Default
 ```
 
-Configurar armazenamento
+### Configurar armazenamento
 
-Aumente a capacidade do SSD para 16 Gib
-Por fim, selecione o botão Executar Instância.
+Aumente a capacidade do SSD para 16 Gib. 
+Por fim, clique no botão Executar Instância.
 Com isso, finalizamos a construção de nossa instância.
 
-A instância já está disponível para utilização.
 
-## Atribuindo um endereço **[*IP elástico*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)**
+
+# Atribuindo um endereço **[*IP elástico*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)**
 
 Um Endereço IP elástico é um endereço IPv4 estático projetado para computação em nuvem dinâmica.
 
 Para atribuir um IP elástico siga os seguintes passos:
 
 
-1. No console do serviço ec2 na parte de rede e segurança clique em IPs elásticos;
-2. Clique em alocar endereço IP elástico;
+1. No console do serviço ec2 na parte de rede e segurança clique em `IPs elásticos`;
+2. Clique em `alocar endereço IP elástico`;
 3. Preencha os campos da seguinte forma:
 
 Grupo de Borda de Rede
@@ -287,14 +132,93 @@ TAGS
 |Project|PB|
 |CostCenter|PBCompass|
 
-4. Clique em alocar.
+4. Clique em `alocar`.
 
 Após a criação do IP elástico, o próximo passo é associar esse IP a nossa instância.
 1. Selecione seu IP elástico;
-2. Clique em associar endereço IP elástico;
+2. Clique em `associar endereço IP elástico`;
 3. Em tipo de recurso selecione instância;
-4. Em instância selecione sua instância;
+4. Em instância selecione o Id de sua instância;
 5. No endereço IP privado selecione o IP de sua instância;
-6. Por fim, clique em associar.
+6. Por fim, clique em `associar`.
 
 Após a execução desses passos você terá sua instância associada a um IP elástico.
+
+```
+Ao tentar se conectar à instância não obtive sucesso. 
+Ao analisar a VPC e suas sub-redes notei que estava faltando criar um gateway de internet. 
+
+```
+
+# **[*Gateways da internet*](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Internet_Gateway.html)**
+Um gateway da Internet é um roteador virtual que conecta uma VPC à Internet.
+
+Para realizar a criação de seu Gateway da internet siga os seguintes passos:
+1. Acesse o console do serviço de VPC pelo link https://us-east-1.console.aws.amazon.com/vpc/;
+1. Clique em `Gateways da internet`.
+2. Clique em `criar Gateways da internet`.
+3. Preencha os campos da seguite forma.
+
+Nome
+```
+GatewayErik
+```
+TAGS
+| Chave | Valor  |
+| ---     | ---   |
+|Project|PB|
+|CostCenter|PBCompass|
+
+5. Clique em `criar Gateway de internet`.
+
+# Configuração da **[*Tabelas de rotas*](https://docs.aws.amazon.com/pt_br/vpc/latest/userguide/VPC_Route_Tables.html)**
+Uma tabela de rotas contém um conjunto de regras, chamado rotas, usadas para determinar para onde o tráfego de rede de sua sub-rede ou gateway é direcionado.
+
+Para realizar a Configuração de sua tabela de rotas.
+
+1. Clique em `tabelas de rotas`;
+2. Selecione a tabela de rotas de sua sub-rede;
+3. Clique em `ações` e selecione editar rotas;
+4. Na página de edição clique em `adicionar rota`;
+5. Preencha os campos da seguinte forma:
+
+| Destino | Alvo  |
+| ---     | ---   |
+|0.0.0.0/0|GatewayErik|
+
+6. Clique em `salvar alterações`
+
+```
+Ao realizar essas configurações consegui acessar a instância normalmente.
+```
+# Configuração do **[*grupo de segurança*](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/ec2-security-groups.html)**
+
+Um grupo de segurança atua como um firewall virtual que controla o tráfego de uma ou mais instâncias.
+
+Para realizar a configuração do grupo de segurança siga os seguintes passos:
+
+1. Acesse o serviço Ec2 pelo console da AWS; https://us-east-1.console.aws.amazon.com/ec2
+2. Clique em `Grupos de segurança`;
+3. Selecione seu grupo de segurança default;
+4. Clique em `ações` e selecione editar regras de entrada;
+4. Preencha os campos da seguinte forma:
+
+Regras de entrada
+
+![segurança](segurança.png)
+
+Na porta SSH foi utilizado meu IP. Você pode obter seu IP pelo site https://meuip.com.br.
+
+6. Clique em `salvar`.
+
+Após realizar todas as configurações podemos acessar a nossa instância via SSH usando o seguinte comando:
+
+ssh -i ChaveErik.pem ec2-user@(Ip da instâcia)
+
+
+Para que a instância fique pronta para ser utilizada use os seguintes comandos: 
+```
+sudo su
+yum -y update 
+```
+E com isso finalizamos a instalação do Linux na AWS.
