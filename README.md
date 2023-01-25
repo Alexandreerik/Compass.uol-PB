@@ -33,7 +33,7 @@ Um par de chaves, que consiste em uma chave privada e uma chave pública, é um 
 
 Para criar o par de chaves siga os seguintes passas:
 
-1. Entre no console do serviço ec2; 
+1. Acesse o serviço Ec2 pelo console da AWS por meio do link https://us-east-1.console.aws.amazon.com/ec2; 
 2. No tópico rede e segurança clique em `pares de chaves`;
 3. Clique em `criar par de chaves`;
 4. Preencha os campos da seguinte forma:
@@ -50,7 +50,7 @@ Formato de arquivo de chave privada
 ```
 .pem
 ```
-OBS. O formato da chave é específico para como você irá acessar a instância, no meu caso será pelo putty no sistema operacional windows.
+OBS. O formato da chave é específico para como você irá acessar a instância, no meu caso será pelo cmd no sistema operacional windows.
 
 TAGS
 | Chave | Valor  |
@@ -154,7 +154,7 @@ Ao analisar a VPC e suas sub-redes notei que estava faltando criar um gateway de
 Um gateway da Internet é um roteador virtual que conecta uma VPC à Internet.
 
 Para realizar a criação de seu Gateway da internet siga os seguintes passos:
-1. Acesse o console do serviço de VPC pelo link https://us-east-1.console.aws.amazon.com/vpc/;
+1. Acesse o console do serviço de VPC por meio do link https://us-east-1.console.aws.amazon.com/vpc/;
 1. Clique em `Gateways da internet`.
 2. Clique em `criar Gateways da internet`.
 3. Preencha os campos da seguite forma.
@@ -197,7 +197,7 @@ Um grupo de segurança atua como um firewall virtual que controla o tráfego de 
 
 Para realizar a configuração do grupo de segurança siga os seguintes passos:
 
-1. Acesse o serviço Ec2 pelo console da AWS; https://us-east-1.console.aws.amazon.com/ec2
+1. Acesse o serviço Ec2 pelo console da AWS por meio do link https://us-east-1.console.aws.amazon.com/ec2;
 2. Clique em `Grupos de segurança`;
 3. Selecione seu grupo de segurança default;
 4. Clique em `ações` e selecione editar regras de entrada;
